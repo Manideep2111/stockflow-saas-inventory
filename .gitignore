@@ -1,0 +1,6 @@
+node_modules/
+dist/
+stockflow.db*
+.env
+.DS_Store
+*.log
