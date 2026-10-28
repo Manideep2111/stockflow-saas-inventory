@@ -73,7 +73,7 @@ function initDb() {
     const bcrypt = require('bcryptjs');
     const orgId = crypto.randomUUID();
     const userId = crypto.randomUUID();
-    const passwordHash = bcrypt.hashSync('demo1234', 10);
+    const passwordHash = bcrypt.hashSync('StockFlow2026_Secure!', 10);
 
     const seedTx = db.transaction(() => {
       db.prepare(`

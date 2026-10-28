@@ -30,7 +30,7 @@ export default function Login({ onSwitchToSignup }) {
 
   const fillDemo = () => {
     setEmail('demo@stockflow.io');
-    setPassword('demo1234');
+    setPassword('StockFlow2026_Secure!');
   };
 
   return (

@@ -9,7 +9,7 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 - **Live URL**: [https://fort-parallel-buying-sie.trycloudflare.com](https://fort-parallel-buying-sie.trycloudflare.com)
 - **Demo Account**:
   - **Email**: `demo@stockflow.io`
-  - **Password**: `demo1234`
+  - **Password**: `StockFlow2026_Secure!`
   - **Organization**: `Demo Electronics Store`
 - Or click **"Create Account"** to create your own isolated tenant organization!
 
