@@ -6,7 +6,7 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 
 ## 🚀 Live Demo & Deployment URL
 
-- **Live URL**: [https://kills-blake-ellis-fighters.trycloudflare.com](https://kills-blake-ellis-fighters.trycloudflare.com)
+- **Live URL**: [https://fare-dealt-belfast-bike.trycloudflare.com](https://fare-dealt-belfast-bike.trycloudflare.com)
 - **Demo Account**:
   - **Email**: `demo@stockflow.io`
   - **Password**: `StockFlow2026_Secure!`
@@ -20,7 +20,7 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 Follow these simple steps on the live application to test every feature from end-to-end:
 
 ### Step 1: Sign In or Register a Tenant Workspace
-- Open the [Live Demo URL](https://kills-blake-ellis-fighters.trycloudflare.com).
+- Open the [Live Demo URL](https://fare-dealt-belfast-bike.trycloudflare.com).
 - Click **"Use Demo Credentials"** at the bottom of the sign-in card (or enter `demo@stockflow.io` / `StockFlow2026_Secure!`).
 - Click **"Sign In to Dashboard"**.
 - *(Alternatively, click **"Create Account"** to register your own custom store organization)*.
