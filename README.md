@@ -6,7 +6,7 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 
 ## 🚀 Live Demo & Deployment URL
 
-- **Live URL**: [https://fort-parallel-buying-sie.trycloudflare.com](https://fort-parallel-buying-sie.trycloudflare.com)
+- **Live URL**: [https://kills-blake-ellis-fighters.trycloudflare.com](https://kills-blake-ellis-fighters.trycloudflare.com)
 - **Demo Account**:
   - **Email**: `demo@stockflow.io`
   - **Password**: `StockFlow2026_Secure!`
