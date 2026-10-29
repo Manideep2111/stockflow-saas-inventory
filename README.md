@@ -38,6 +38,87 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 
 ---
 
+## 🏛️ System Architecture
+
+### 1. High-Level Multi-Tier Architecture
+```mermaid
+graph TD
+    subgraph Client ["Client Layer (Browser)"]
+        UI["React 19 SPA (Vite + Tailwind CSS v4)"]
+        AuthCtx["AuthContext & State Management"]
+        Views["Dashboard | Products Table | Restock Modals | Settings"]
+        UI --> AuthCtx
+        UI --> Views
+    end
+
+    subgraph Edge ["Edge & Networking"]
+        CF["Cloudflare Global Edge / Reverse Proxy"]
+        HTTPS["SSL/TLS Termination (HTTPS)"]
+        CF --> HTTPS
+    end
+
+    subgraph Backend ["Application Layer (Node.js & Express 5)"]
+        Server["Express HTTP Server"]
+        Middleware["Auth Middleware (JWT Verification & Tenant Scoping)"]
+        
+        subgraph Routes ["Modular REST API Routes"]
+            R_Auth["/api/auth (Signup, Login, Sessions)"]
+            R_Prod["/api/products (CRUD, Restock +/-)"]
+            R_Dash["/api/dashboard (KPI Metrics, Low Stock)"]
+            R_Sett["/api/settings (Org Thresholds)"]
+        end
+        
+        Server --> Middleware
+        Middleware --> R_Auth
+        Middleware --> R_Prod
+        Middleware --> R_Dash
+        Middleware --> R_Sett
+    end
+
+    subgraph Storage ["Persistence Layer (SQLite with WAL Mode)"]
+        DB[("SQLite Database (stockflow.db)")]
+        T_Org["organizations (id, name, default_threshold)"]
+        T_User["users (id, org_id, email, password_hash)"]
+        T_Prod["products (id, org_id, sku, qty, threshold)"]
+        T_Adj["stock_adjustments (id, prod_id, org_id, delta, note)"]
+        
+        DB --- T_Org
+        DB --- T_User
+        DB --- T_Prod
+        DB --- T_Adj
+    end
+
+    Client -->|HTTPS REST Requests| CF
+    HTTPS -->|Reverse Proxy| Server
+    Routes -->|Scoped Queries: WHERE organization_id = ?| DB
+```
+
+---
+
+### 2. Multi-Tenant Request Isolation Flow
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Tenant as Store Owner (Tenant)
+    participant Client as React 19 Frontend
+    participant Server as Express 5 API
+    participant Auth as Auth Middleware
+    participant DB as SQLite Database
+
+    Tenant->>Client: Interacts with Dashboard / Catalog
+    Client->>Server: GET /api/products (Cookie: token)
+    Server->>Auth: Validate JWT Token Signature
+    Auth->>Auth: Extract userId & organizationId
+    Auth->>Server: Bind req.organizationId = 'org_abc'
+    Server->>DB: SELECT * FROM products WHERE organization_id = 'org_abc'
+    Note over DB: Bounded to tenant: Zero cross-tenant data leaks
+    DB-->>Server: Return tenant's isolated catalog records
+    Server-->>Client: 200 OK (Scoped JSON payload)
+    Client-->>Tenant: Render customized inventory & alerts
+```
+
+---
+
 ## 🧱 Database Schema
 
 ```sql
