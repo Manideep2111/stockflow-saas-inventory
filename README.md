@@ -15,6 +15,73 @@ A multi-tenant SaaS inventory management web application built strictly accordin
 
 ---
 
+## 🧭 Step-by-Step User Execution & Verification Flow
+
+Follow these simple steps on the live application to test every feature from end-to-end:
+
+### Step 1: Sign In or Register a Tenant Workspace
+- Open the [Live Demo URL](https://kills-blake-ellis-fighters.trycloudflare.com).
+- Click **"Use Demo Credentials"** at the bottom of the sign-in card (or enter `demo@stockflow.io` / `StockFlow2026_Secure!`).
+- Click **"Sign In to Dashboard"**.
+- *(Alternatively, click **"Create Account"** to register your own custom store organization)*.
+
+### Step 2: Inspect Real-Time Dashboard Overview (FR-6)
+- **Tenant Header**: Shows your active organization name (`Demo Electronics Store`).
+- **4 Real-Time KPI Cards**:
+  1. **Total Products**: Total unique cataloged SKUs.
+  2. **Total Units on Hand**: Sum of all physical units in stock.
+  3. **Low Stock Items**: Count of products requiring replenishment (highlighted in amber).
+  4. **Est. Retail Value**: Total inventory value (`qty * selling_price`).
+- **Low Stock Items Alert Table**: Displays products where `Quantity on Hand <= Threshold` (e.g., *USB-C Cable* with 3 units &le; 5).
+
+### Step 3: Perform Quick Restock / Stock Adjustment (FR-5)
+- In the **Low Stock Items Alert Table**, find the product row and click **"Restock / Adjust"** ($\updownarrow$).
+- In the modal:
+  - Select **"Add Units (+)"**.
+  - Enter `10` units.
+  - Enter an optional note (e.g., *"Supplier restock delivery"*).
+  - Observe the **Live Stock Preview** update from `3` &rarr; `13`.
+- Click **"Apply Stock Change"**.
+- **Result**: Total units increase by 10, a success toast notification appears, and because stock is now 13 (&gt; 5), the item **automatically clears from the Low Stock alert table**!
+
+### Step 4: Explore Catalog Search & Filters (FR-4)
+- Click **"Products"** in the left sidebar menu.
+- **Search**: Type `mouse` or `TECH-001` in the search bar. The table filters instantly.
+- **Filter Pills**: Click **"Low Stock Only"** to view only distressed inventory. Click **"All Products"** to reset.
+
+### Step 5: Create a New Product (FR-3 & FR-4)
+- Click **"+ Add Product"** at the top right.
+- Fill out the form:
+  - **Name**: `Portable Power Bank 20000mAh`
+  - **SKU**: `PWR-501` *(enforced unique within this organization)*
+  - **Quantity on Hand**: `2` *(keep it low to test the alert)*
+  - **Cost Price**: `14.50`
+  - **Selling Price**: `34.99`
+  - **Low Stock Threshold**: `5` *(or leave blank to inherit global default)*
+- Click **"Create Product"**.
+- **Result**: The product appears with a red **"Low Stock"** badge and immediately reflects in the dashboard alert table.
+
+### Step 6: Edit & Delete with Confirmation (FR-4)
+- Click the **Pencil (Edit)** icon on any row to modify price, description, or quantities.
+- Click the **Trash (Delete)** icon. A safety modal confirms: *"Are you sure you want to permanently delete...?"*
+- Click **"Delete"** to confirm removal.
+
+### Step 7: Test Global Settings & Threshold Inheritance (FR-7)
+- Click **"Settings"** in the left sidebar.
+- Change the **Default Low Stock Threshold** from `5` to `20` and click **"Save Settings"**.
+- Switch back to **Dashboard**: Any product with stock &le; 20 without an individual threshold is now automatically flagged as low stock!
+- Set it back to `5` to restore default alerting.
+
+### Step 8: Verify Multi-Tenant Data Isolation (FR-2)
+- Click **"Sign Out"** in the sidebar footer.
+- Click **"Create Account"** and register a second organization (e.g., `Apex Retail Store`).
+- Log in and verify that:
+  - The new store has its own clean, isolated catalog.
+  - You can reuse the SKU `TECH-001` without conflict.
+  - Zero data from Store A is accessible or visible.
+
+---
+
 ## 📋 PRD Feature Compliance Matrix
 
 | PRD Section | Requirement | Implementation Status | Notes |
